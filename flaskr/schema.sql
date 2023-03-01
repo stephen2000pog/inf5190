@@ -7,4 +7,3 @@ create table article (
   paragraphe varchar(500)
 );
 
-

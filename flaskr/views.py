@@ -2,8 +2,6 @@ from flask import Blueprint, render_template, g, Flask
 from .models import Database
 import sqlite3
 
-app = Flask(__name__)
-
 views = Blueprint('views', __name__)
 
 def get_db():
@@ -12,11 +10,6 @@ def get_db():
         g._database = Database() 
     return g._database
 
-@app.teardown_appcontext
-def close_connection(exception):
-    db = getattr(g, '_database', None)
-    if db is not None:
-        db.disconnect()
 
 @views.route('/')
 def index():

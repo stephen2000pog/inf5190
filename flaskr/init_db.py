@@ -7,7 +7,7 @@ with open('flaskr/schema.sql') as f:
 
 cur = connection.cursor()
 
-cur.execute("INSERT INTO article (id, title, identifiant, auteur, date_publication, paragraphe) VALUES (?, ?, ?, ?, ?, ?)",
+cur.execute("INSERT INTO article (id, titre, identifiant, auteur, date_publication, paragraphe) VALUES (?, ?, ?, ?, ?, ?)",
             (1,'First Post', 'Content for the first post', 'Alice Shmirtz', '2018-05-29', 'Il etait une fois Alice')
             )
 
