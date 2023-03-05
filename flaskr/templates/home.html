@@ -1,22 +1,21 @@
-{% extends "base.html" %} 
-{% block title %}Home{% endblock %} 
+{% extends "base.html" %}
+{% block title %}Accueil{% endblock %}
 {% block content%}
 <div>
     <h1>Publications du jour</h1>
-    <p>hello</p>
-    <ul>
+    <br>
         {% for article in articles%}
-      <li>
-        <p>Auteur : nom de l'auteur {{ article["titre"] }}</p>
-        <p>Date de publication : date de publication</p>
-        <p>Paragraphe : contenu du paragraphe</p>
-      </li>
-      <li>...</li>
-      <li>...</li>
-      <li>...</li>
-      <li>...</li>
-      {% endfor %}   
-    </ul>
+        <h3>{{article["titre"]}}</h3>
+        <p>Auteur : {{ article["auteur"] }}</p>
+        <p>Date de publication : {{ article["date_publication"] }}</p>
+        <p>Description : {{ article["paragraphe"] }}</p>
+        <hr>
+      {% endfor %}  
 </div>
+<form action="/search" method="GET">
+  <label for="search">Rechercher par auteur ou titre :</label>
+  <input type="text" id="search" name="query">
+  <button type="submit">Rechercher</button>
+</form>
 
 {% endblock %}

@@ -10,7 +10,7 @@ class Database:
         if self.connection is None:
             self.connection = sqlite3.connect('articles.db')
         return self.connection
-    
+   
     def get_row_connection(self):
         if self.connection is None:
             self.connection = sqlite3.connect('articles.db')
@@ -24,8 +24,10 @@ class Database:
 
     def get_article(self):
         cursor = self.get_row_connection().cursor()
-        cursor.execute("SELECT id, titre, identifiant, auteur, date_publication, paragraphe FROM article")
-        articles = cursor.fetchall()
+        cursor.execute("SELECT * FROM article")
+        #"WHERE date_publication < date('now') "
+        #"ORDER BY date_publication DESC")
+        articles = cursor.fetchmany(5)
         return articles
 
     def insert_article(self, titre, identifiant, auteur, date, paragraphe):
@@ -34,3 +36,10 @@ class Database:
         cursor.execute(("insert into article(titre, identifiant, auteur, date_publication, paragraphe) "
                         "values(?, ?, ?, ?, ?)"), (titre, identifiant, auteur, date, paragraphe))
         connection.commit()
+
+    def search_articles(self, query):
+        connection = self.get_row_connection()
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM article WHERE titre LIKE ? OR paragraphe LIKE ?", ('%'+query+'%', '%'+query+'%'))
+        articles = cursor.fetchall()
+        return articles
