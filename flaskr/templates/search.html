@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+  <div>
+    <h1>Search Results for "{{ query }}"</h1>
+    <ul>
+      {% for article in articles %}
+      <li>
+        <p>{{ article["titre"] }}</p>
+        <p>Date de publication : {{ article["date_publication"] }}</p>
+        <a href="{{ url_for('views.article', article_id=article['id']) }}">Lire l'article</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
