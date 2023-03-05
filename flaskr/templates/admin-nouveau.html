@@ -1,5 +1,26 @@
 {% extends "base.html" %} 
 {% block title %}Création d'un nouvel article{% endblock %} 
 {% block content%}
-    
+<div class="container mt-4">
+    <div class="row justify-content-center align-items-center">
+        <div class="ajout_formation">
+        <form class="col-6">
+            <h3>Ajouter/modifier une nouvelle formation continue</h3>
+            <div class="form-group">
+                <label for="formation">Formation à ajouter</label><br>
+                <input type="text" id="formation" name="formation">
+            </div>
+            <div class="form-group">
+                <label for="formation">Formation à modifier</label><br>
+                <input type="text" id="fornatuin" name="password">
+            </div>
+            <div class="form-group">
+                <button type="submit" value="Soumettre" class="btn btn-primary">Soumettre</button>
+                <button type="reset" value="Annuler" class="btn btn-secondary">Annuler</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
