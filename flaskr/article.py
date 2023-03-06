@@ -7,7 +7,7 @@ class Article(Database):
     def get_articles_of_the_day(self, number):
         cursor = self.get_connection_row().cursor()
         cursor.execute("SELECT * FROM article "
-        "WHERE date(date_publication) = date('now') "
+        "WHERE date(date_publication) < date('now') "
         "ORDER BY date_publication DESC")
         articles = cursor.fetchmany(number)
         return articles
@@ -27,7 +27,7 @@ class Article(Database):
         return articles
 
     def insert_article(self, titre, identifiant, auteur, date, paragraphe):
-        connection = self.get_connection_row()
+        connection = self.get_connection()
         cursor = connection.cursor()
         cursor.execute(("INSERT into article(titre, identifiant, auteur, date_publication, paragraphe) "
                         "values(?, ?, ?, ?, ?)"), (titre, identifiant, auteur, date, paragraphe))

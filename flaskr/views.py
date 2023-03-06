@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, g, request, redirect
 from .article import Article
+import re
+from datetime import datetime
 
 views = Blueprint('views', __name__)
 
@@ -51,7 +53,60 @@ def admin_nouveau():
 
 @views.route('/creation-article', methods=['POST'])
 def create_article():
-    return 
+    if request.method == 'POST':
+        titre = request.form['titre']
+        identifiant = request.form['identifiant']
+        auteur = request.form['auteur']
+        date_publication = request.form['date_publication']
+        paragraphe = request.form['paragraphe']
 
+        titre_valid = validate_titre(titre)
+        identifiant_valid = validate_identifiant(identifiant)
+        auteur_valid = validate_auteur(auteur)
+        date_valid = validate_date(date_publication)
+        paragraphe_valid = validate_paragraphe(paragraphe)
+
+        if not (titre_valid and identifiant_valid and auteur_valid and date_valid and paragraphe_valid):
+            return render_template('admin-nouveau.html', 
+                                titre_valid = titre_valid,
+                                identifiant_valid = identifiant_valid,
+                                auteur_valid = auteur_valid,
+                                date_valid = date_valid,
+                                paragraphe_valid = paragraphe_valid,
+                                titre=titre,
+                                identifiant=identifiant,
+                                auteur=auteur,
+                                date_publication=date_publication,
+                                paragraphe=paragraphe)
+        else:
+            get_db().insert_article(titre, identifiant,
+                                    auteur, date_publication, paragraphe)
+            return redirect('/admin')
+
+def validate_titre(titre):
+    pattern = r'^[a-zA-Z0-9\s]{1,100}$'
+    return bool(re.match(pattern, titre))
+
+def validate_identifiant(identifiant):
+    pattern = r'^[a-zA-Z0-9\s]{1,50}$'
+    return bool(re.match(pattern, identifiant))
+
+def validate_auteur(auteur):
+    pattern = r'^[a-zA-Z0-9\s]{1,100}$'
+    return bool(re.match(pattern, auteur))
+
+def validate_date(date):
+    try:
+        datetime.strptime(date, '%Y-%m-%d')
+        return True
+    except ValueError:
+        return False
+    
+def validate_paragraphe(paragraphe):
+    if len(paragraphe) > 500 or len(paragraphe) < 1:
+        return False
+    return True
+
+ 
 
 

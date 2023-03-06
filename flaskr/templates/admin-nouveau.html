@@ -3,23 +3,58 @@
 {% block content%}
 <div class="container mt-4">
     <div class="row justify-content-center align-items-center">
-        <div class="ajout_formation">
-        <form class="col-6">
-            <h3>Ajouter/modifier une nouvelle formation continue</h3>
+        <form class="col-6" action="/creation-article" method="POST">
+            <h3>Créer un nouvel article</h3>
+            {% if not titre_valid %}
+            <div class="alert alert-danger alert-dismissible">
+                <p>Le champ titre n'est pas valide.</p>
+            </div>
+            {% endif %}
             <div class="form-group">
-                <label for="formation">Formation à ajouter</label><br>
-                <input type="text" id="formation" name="formation">
+                <label for="formation">Titre :</label><br>
+                <input type="text" id="titre" name="titre" type="text" class="form-control form-control-lg" value="{{ titre }}">
+            </div>
+            {% if not identifiant_valid %}
+            <div class="alert alert-danger alert-dismissible">
+                <p>Le champ identifiant n'est pas valide.</p>
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="formation">Identifiant :</label><br>
+                <input id="identifiant" name="identifiant" type="text" class="form-control form-control-lg" value="{{ identifiant }}">
+            </div>
+            {% if not auteur_valid %}
+            <div class="alert alert-danger alert-dismissible">
+                <p>Le champ identifiant n'est pas valide.</p>
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="formation">Auteur :</label><br>
+                <input id="auteur" name="auteur" type="text" class="form-control form-control-lg" value="{{ auteur }}">
+            </div>
+            {% if not date_valid %}
+            <div class="alert alert-danger alert-dismissible">
+                <p>Le champ identifiant n'est pas valide.</p>
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="formation">Date de publication :</label><br>
+                <input id="date_publication" name="date_publication" type="text" class="form-control form-control-lg" value="{{ date_publication }}">
+            </div>
+            {% if not paragraphe_valid %}
+            <div class="alert alert-danger alert-dismissible">
+                <p>Le champ paragraphe n'est pas valide.</p>
+            </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="formation">Paragraphe :</label><br>
+                <textarea id="paragraphe" name="paragraphe" class="form-control form-control-lg">{{ paragraphe }}</textarea>
             </div>
             <div class="form-group">
-                <label for="formation">Formation à modifier</label><br>
-                <input type="text" id="fornatuin" name="password">
-            </div>
-            <div class="form-group">
-                <button type="submit" value="Soumettre" class="btn btn-primary">Soumettre</button>
-                <button type="reset" value="Annuler" class="btn btn-secondary">Annuler</button>
+                <button type="submit" class="btn btn-primary">Créer</button>
+                <button type="reset" class="btn btn-secondary">Annuler</button>
             </div>
         </form>
-        </div>
     </div>
 </div>
 

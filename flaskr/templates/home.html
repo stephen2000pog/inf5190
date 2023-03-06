@@ -2,7 +2,7 @@
 {% block title %}Accueil{% endblock %}
 {% block content%}
 <div>
-    <h1>Publications du jour</h1>
+    <h1>Dernières publications en date</h1>
     <br>
         {% for article in articles%}
         <p>Titre : {{ article["titre"] }}</p>
@@ -15,7 +15,7 @@
 <form action="/search" method="GET">
   <label for="search">Rechercher par auteur ou titre :</label>
   <input type="text" id="search" name="query">
-  <button type="submit">Rechercher</button>
+  <button type="submit" class="btn btn-primary">Rechercher</button>
 </form>
 
 {% endblock %}
