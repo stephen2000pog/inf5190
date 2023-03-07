@@ -53,6 +53,12 @@ def admin_nouveau():
 
 @views.route('/creation-article', methods=['POST'])
 def create_article():
+    titre_valid = True
+    identifiant_valid = True
+    auteur_valid = True
+    date_valid = True
+    paragraphe_valid = True
+
     if request.method == 'POST':
         titre = request.form['titre']
         identifiant = request.form['identifiant']
