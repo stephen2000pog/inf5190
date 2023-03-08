@@ -6,6 +6,5 @@ python .\flaskr\init_db.py
 
 ## Lancer le programme
 python main.py
-test
 ## Accéder à l'application
 Aller à http://127.0.0.1:5000
