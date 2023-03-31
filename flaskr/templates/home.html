@@ -1,21 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Accueil{% endblock %}
 {% block content%}
-<div>
-    <h1>Dernières publications en date</h1>
-    <br>
-        {% for article in articles%}
-        <p>Titre : {{ article["titre"] }}</p>
-        <p>Auteur : {{ article["auteur"] }}</p>
-        <p>Date de publication : {{ article["date_publication"] }}</p>
-        <p>Description : {{ article["paragraphe"] }}</p>
-        <hr>
-      {% endfor %}  
-</div>
-<form action="/search" method="GET">
-  <label for="search">Rechercher par auteur ou titre :</label>
-  <input type="text" id="search" name="query">
-  <button type="submit" class="btn btn-primary">Rechercher</button>
+<form action="/search-result" method="GET">
+    <label for="search-result">Rechercher les contravenants par nom d'établissement, propriétaire ou rue:</label>
+    <input type="text" id="search-result" name="query">
+    <button type="submit" class="btn btn-primary">Rechercher</button>
 </form>
-
 {% endblock %}
