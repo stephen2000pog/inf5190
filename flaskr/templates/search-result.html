@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Resulat de recherche{% endblock %}
+{% block content%}
+<div>
+    <h1>Résultats pour la recherche "{{ query }}"</h1>
+    <ul>
+      {% for contravenant in contravenants %}
+      <li>
+        <p>Description : {{ contravenant["description"] }}</p>
+        <p>Adresse : {{ contravenant["adresse"] }}</p>
+        <p>Etablissement : {{ contravenant["etablissement"] }}</p>
+        <p>Proprietaire : {{ contravenant["proprietaire"] }}</p>
+        <p>Statut : {{ contravenant["statut"] }}</p>
+        <hr>
+      </li>
+      {% endfor %}
+    </ul>
+</div>
+{% endblock %}
