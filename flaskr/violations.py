@@ -9,5 +9,5 @@ class Violation(Database):
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM violations "
                        "WHERE etablissement LIKE ? OR proprietaire LIKE ? OR adresse LIKE ?", ('%'+query+'%', '%'+query+'%', '%'+query+'%'))
-        contravenants = cursor.fetchall()           #AND
+        contravenants = cursor.fetchall()       
         return contravenants
