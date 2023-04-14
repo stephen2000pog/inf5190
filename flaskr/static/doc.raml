@@ -1,0 +1,48 @@
+#%RAML 1.0
+title: API pour les contraventions
+baseUri: http://localhost:5000
+mediaType: application/json
+
+types:
+
+
+/contravenents:
+  displayName: Contravention
+  get:
+    description: Récupérer la liste des contraventions
+    queryParameters:
+      du:
+        type: string
+        description: Date de début au format ISO 8601 (YYYY-MM-DD)
+        example: 2022-05-14
+        required: true
+      au:
+        type: string
+        description: Date de fin au format ISO 8601 (YYYY-MM-DD)
+        example: 2022-05-20
+        required: true
+    responses:
+      200:
+        body:
+          application/json:
+            type: Contraventions[]
+            example: 
+              "adresse": "7600 Boul. Viau, St-Léonard, Québec",
+              "business_id": "110116",
+              "categorie": "Magasin à rayons",
+              "date": 20220517,
+              "date_jugement": 20221110,
+              "date_statut": 20150420,
+              "description": "Le lieu ou le véhicule doit être exempt de contaminants, de polluants, de toute espèce d'animaux y compris les insectes et les rongeurs ou de leurs excréments.",
+              "etablissement": "DOLLARAMA",
+              "id_poursuite": 8662,
+              "montant": 1600,
+              "proprietaire": "DOLLARAMA S.E.C.",
+              "statut": "Ouvert",
+              "ville": "St-Léonard",
+      404:
+        body:
+          application/json:
+            example:
+              "message": "Aucune contravention trouvée pour les dates spécifiées"
+              

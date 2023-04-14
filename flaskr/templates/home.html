@@ -2,8 +2,28 @@
 {% block title %}Accueil{% endblock %}
 {% block content%}
 <form action="/search-result" method="GET">
-    <label for="search-result">Rechercher les contravenants par nom d'établissement, propriétaire ou rue:</label>
+    <p>Rechercher les contravenants par nom d'établissement, propriétaire, rue:</p>
+    <label for="search-result"></label>
     <input type="text" id="search-result" name="query">
     <button type="submit" class="btn btn-primary">Rechercher</button>
 </form>
+<br>
+<form>
+    <p>Rechercher les contravenants entre 2 dates.</p>
+    <label for="date-debut">Du :</label>
+    <input type="date" id="date-debut" name="du">
+    <label for="date-fin">Au :</label>
+    <input type="date" id="date-fin" name="au">
+    <button type="button" class="btn btn-primary" onclick="rechercherContraventions()">Rechercher</button>
+</form>
+<table id="table-contraventions" class="table">
+    <thead>
+      <tr>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+<script type="text/javascript" src="static\ajax.js">
+</script>
 {% endblock %}
