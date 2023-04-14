@@ -5,10 +5,9 @@ function rechercherContraventions() {
     xhr.onreadystatechange = function() {
       if (this.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
             try {
-              var contraventions = JSON.parse(this.responseText);
-              console.log(contraventions)
-              console.log(contraventions[0])
-              console.log(contraventions.etablissement) 
+              var contraventionsJSON = JSON.parse(this.responseText);
+              var contraventions = JSON.parse(contraventionsJSON)
+              removeTable();
               populateTable(contraventions);
             } catch (e) {
               console.warn("Impossible de charger les contraventions")
@@ -19,21 +18,38 @@ function rechercherContraventions() {
     xhr.send();
 }
 
+function removeTable(){
+  var table = document.getElementById("table-contraventions");
+  while (table.rows.length > 0) {
+    table.deleteRow(0);
+  }
+  var header = table.querySelector("thead tr");
+  if (header) {
+    header.parentNode.removeChild(header);
+  }
+}
+
 function populateTable(contraventions){
-  var thead = document.querySelector("#table-contraventions thead tr");
-  thead.innerHTML = "<th>Nom de l'établissement</th><th>Nombre de contraventions</th>";
+  var thead = document.querySelector("#table-contraventions thead");
+  thead.innerHTML = "<tr><th>Nom de l'établissement</th><th>Nombre de contraventions</th></tr>";
   var tbody = document.querySelector("#table-contraventions tbody");
+  var resultats = {};
   for (var i = 0; i < contraventions.length; i++) {
+    var etablissement = contraventions[i].etablissement;
+    if (etablissement in resultats) {
+      resultats[etablissement]++;
+    } else {  
+      resultats[etablissement] = 1;
+    }
+  }
+
+  for (var etablissement in resultats) {
+    var count = resultats[etablissement];
     var row = tbody.insertRow();
     var nomCell = row.insertCell();
     var nombreCell = row.insertCell();
-    //console.log(contraventions)
-    //console.log(contraventions[0])
-    //console.log(contraventions[0].etablissement)
-    //console.log(contraventions[0].etablissement[i])
-    nomCell.textContent = contraventions[i].etablissement;
-    nombreCell.textContent = 1;
+    nomCell.textContent = etablissement;
+    nombreCell.textContent = count;
   }
-
 }
 
