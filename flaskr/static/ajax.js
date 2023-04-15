@@ -54,6 +54,10 @@ function populateDropdownBtn() {
   xhr.send();
 }
 
+window.onload = function() {
+  populateDropdownBtn();
+};
+
 function populateTable(contraventions){
   var thead = document.querySelector("#table-contraventions thead");
   thead.innerHTML = "<tr><th>Nom de l'établissement</th><th>Nombre de contraventions</th></tr>";
@@ -76,5 +80,11 @@ function populateTable(contraventions){
     nomCell.textContent = etablissement;
     nombreCell.textContent = count;
   }
+}
+
+function searchInfractionByEtablissement(){
+  var etablissement = document.getElementById("restaurant-select").value;
+  console.log(etablissement)
+  console.log(etablissement)
 }
 

@@ -17,11 +17,12 @@
     <button type="button" class="btn btn-primary" onclick="searchContraventions()">Rechercher</button>
 </form>
 <br>
-<p>Rechercher les contravenants par nom:</p>
-<select id="restaurant-select" onclick="populateDropdownBtn()">
-  <option value="">Choisir un restaurant</option>
-</select>
-<button type="button" class="btn btn-primary" onclick="">Rechercher</button>
+<form>
+  <p>Rechercher les infractions par nom:</p>
+  <select id="restaurant-select">
+  </select>
+  <button type="button" class="btn btn-primary" onclick="searchInfractionByEtablissement()">Rechercher</button>
+</form>
 <table id="table-contraventions" class="table">
     <thead>
     </thead>
