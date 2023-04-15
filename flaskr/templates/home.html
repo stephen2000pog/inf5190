@@ -9,13 +9,19 @@
 </form>
 <br>
 <form>
-    <p>Rechercher les contravenants entre 2 dates.</p>
+    <p>Rechercher les contravenants entre 2 dates:</p>
     <label for="date-debut">Du :</label>
     <input type="date" id="date-debut" name="du">
     <label for="date-fin">Au :</label>
     <input type="date" id="date-fin" name="au">
-    <button type="button" class="btn btn-primary" onclick="rechercherContraventions()">Rechercher</button>
+    <button type="button" class="btn btn-primary" onclick="searchContraventions()">Rechercher</button>
 </form>
+<br>
+<p>Rechercher les contravenants par nom:</p>
+<select id="restaurant-select" onclick="populateDropdownBtn()">
+  <option value="">Choisir un restaurant</option>
+</select>
+<button type="button" class="btn btn-primary" onclick="">Rechercher</button>
 <table id="table-contraventions" class="table">
     <thead>
     </thead>

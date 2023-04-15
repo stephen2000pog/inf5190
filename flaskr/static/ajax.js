@@ -1,4 +1,4 @@
-function rechercherContraventions() {
+function searchContraventions() {
     var du = document.getElementById("date-debut").value;
     var au = document.getElementById("date-fin").value;
     var xhr = new XMLHttpRequest();
@@ -6,7 +6,7 @@ function rechercherContraventions() {
       if (this.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
             try {
               var contraventionsJSON = JSON.parse(this.responseText);
-              var contraventions = JSON.parse(contraventionsJSON)
+              var contraventions = JSON.parse(contraventionsJSON);
               removeTable();
               populateTable(contraventions);
             } catch (e) {
@@ -27,6 +27,31 @@ function removeTable(){
   if (header) {
     header.parentNode.removeChild(header);
   }
+}
+
+function populateDropdownBtn() {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (this.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+      try {
+        var contraventionsJSON = JSON.parse(this.responseText);
+        var contraventions = JSON.parse(contraventionsJSON);
+        var dropdown = document.getElementById("restaurant-select");
+        dropdown.innerHTML = "<option value=''>Choisir un restaurant</option>";
+        for (var i = 0; i < contraventions.length; i++) {
+          var etablissement = contraventions[i].etablissement;
+          var option = document.createElement("option");
+          option.value = etablissement;
+          option.text = etablissement;
+          dropdown.appendChild(option);
+        }
+      } catch (e) {
+        console.warn("Impossible de charger les contraventions")
+      }
+    }
+  };
+  xhr.open("GET", "/all-contrevenants");
+  xhr.send();
 }
 
 function populateTable(contraventions){

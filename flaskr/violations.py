@@ -37,4 +37,16 @@ class Violation(Database):
 
         return json.dumps(result)
     
-    
+    def search_distinct_etablissement(self):
+        connection = self.get_connection_row()
+        cursor = connection.cursor()
+        query = "SELECT DISTINCT etablissement FROM violations"
+        cursor.execute(query)
+        rows = cursor.fetchall()
+        connection.close()
+
+        result = []
+        for row in rows:
+            result.append(dict(row))
+
+        return json.dumps(result)
