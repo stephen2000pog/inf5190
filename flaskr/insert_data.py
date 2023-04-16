@@ -1,6 +1,3 @@
-#lire toutes donnees
-#inserer toutes les donnees dans la bd
-
 import csv
 import sqlite3
 import urllib.request
@@ -24,10 +21,19 @@ def insert_data():
         reader = csv.reader(f)
         next(reader)  
         for row in reader:
+            # Check if the row already exists in the database
             cursor.execute("""
-                INSERT INTO violations (id_poursuite, business_id, date, description, adresse, date_jugement, etablissement, montant, proprietaire, ville, statut, date_statut, categorie)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                SELECT COUNT(*) FROM violations
+                WHERE id_poursuite = ? AND business_id = ? AND date = ? AND description = ? AND adresse = ? AND date_jugement = ?
+                AND etablissement = ? AND montant = ? AND proprietaire = ? AND ville = ? AND statut = ? AND date_statut = ? AND categorie = ?
             """, row)
+            count = cursor.fetchone()[0]
+            if count == 0:
+                # If the row does not exist, insert it into the database
+                cursor.execute("""
+                    INSERT INTO violations (id_poursuite, business_id, date, description, adresse, date_jugement, etablissement, montant, proprietaire, ville, statut, date_statut, categorie)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, row)
 
     connection.commit()
     connection.close()
