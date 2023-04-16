@@ -39,6 +39,15 @@ def get_all_contraventions():
         return response
     return jsonify(contraventions)
 
+@views.route('/infractions/<etablissement>')
+def get_infractions(etablissement):
+    infractions = get_db().search_infractions_by_etablissement(etablissement)
+    if not infractions:
+        response = jsonify({"message": "Aucune contravention trouvée pour les dates spécifiées"})
+        response.status_code = 404
+        return response
+    return jsonify(infractions)
+
 @views.route('/doc')
 def documentation():
     #with open('flaskr/static/doc.raml', 'r') as f:
