@@ -29,12 +29,12 @@ class Violation(Database):
         query = "SELECT * FROM violations WHERE date >= ? AND date <= ?"
         cursor.execute(query, (du, au))
         rows = cursor.fetchall()
-        connection.close()
 
         result = []
         for row in rows:
             result.append(dict(row))
 
+        connection.close()
         return json.dumps(result)
     
     def search_distinct_etablissement(self):
@@ -49,4 +49,19 @@ class Violation(Database):
         for row in rows:
             result.append(dict(row))
 
+        connection.close()
+        return json.dumps(result)
+    
+    def search_infractions_by_etablissement(self, etablissement):
+        connection = self.get_connection_row()
+        cursor = connection.cursor()
+        query = "SELECT * FROM violations WHERE etablissement = ?"
+        cursor.execute(query, (etablissement,))
+        rows = cursor.fetchall()
+
+        result = []
+        for row in rows:
+            result.append(dict(row))
+
+        connection.close()
         return json.dumps(result)
