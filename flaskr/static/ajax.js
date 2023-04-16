@@ -84,7 +84,39 @@ function populateTable(contraventions){
 
 function searchInfractionByEtablissement(){
   var etablissement = document.getElementById("restaurant-select").value;
-  console.log(etablissement)
-  console.log(etablissement)
+  var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            try {
+              var contraventionsJSON = JSON.parse(this.responseText);
+              var contraventions = JSON.parse(contraventionsJSON);
+              clearViolations();
+              displayViolations(contraventions);
+            } catch (e) {
+              console.warn("Impossible de charger les contraventions")
+            } 
+      }
+    };
+    xhr.open("GET", "/infractions/" + etablissement);
+    xhr.send();
 }
 
+function clearViolations(){
+  var table = document.getElementById("table-violations");
+  while (table.rows.length > 0) {
+    table.deleteRow(0);
+  }
+}
+
+function displayViolations(contraventions) {
+  var tbody = document.querySelector("#table-violations tbody");
+  for (var i = 0; i < contraventions.length; i++) {
+    var row = tbody.insertRow();
+    var dateCell = row.insertCell();
+    var descrCell = row.insertCell();
+    var montantCell = row.insertCell();
+    dateCell.textContent = contraventions[i].date;
+    descrCell.textContent = contraventions[i].description;
+    montantCell.textContent = contraventions[i].montant;
+  }
+}
