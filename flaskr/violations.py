@@ -20,7 +20,6 @@ class Violation(Database):
             
         cursor.execute(sql_query, params)
         contravenants = cursor.fetchall()
-        connection.close()
         return contravenants
     
     def search_contraventions(self, du, au):
@@ -34,7 +33,6 @@ class Violation(Database):
         for row in rows:
             result.append(dict(row))
 
-        connection.close()
         return json.dumps(result)
     
     def search_distinct_etablissement(self):
@@ -43,13 +41,11 @@ class Violation(Database):
         query = "SELECT DISTINCT etablissement FROM violations"
         cursor.execute(query)
         rows = cursor.fetchall()
-        connection.close()
 
         result = []
         for row in rows:
             result.append(dict(row))
 
-        connection.close()
         return json.dumps(result)
     
     def search_infractions_by_etablissement(self, etablissement):
@@ -63,5 +59,29 @@ class Violation(Database):
         for row in rows:
             result.append(dict(row))
 
-        connection.close()
         return json.dumps(result)
+    
+    def search_etablissements_by_most_infractions(self, format):
+        connection = self.get_connection_row()
+        cursor = connection.cursor()
+        query = """SELECT etablissement, COUNT(*) AS nombre_infractions
+                FROM violations
+                GROUP BY etablissement
+                HAVING nombre_infractions >= 1
+                ORDER BY nombre_infractions DESC;"""
+        cursor.execute(query)
+        rows = cursor.fetchall()
+
+        result = []
+        for row in rows:
+            result.append(dict(row))
+
+        if format == 'json':
+            return json.dumps(result)
+        elif format == 'xml':
+            xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+            for infraction in result:
+                xml += f'  <etablissement>{infraction["etablissement"]}</etablissement> <infractions>{infraction["nombre_infractions"]}</infractions>"\n'
+            return xml
+        else:
+            raise ValueError(f'Format non valide: {format}')
