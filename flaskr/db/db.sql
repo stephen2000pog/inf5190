@@ -13,3 +13,10 @@ CREATE TABLE violations (
     date_statut TEXT,
     categorie TEXT
 );
+CREATE TABLE users (
+    id INTEGER,
+    nom_complet TEXT,
+    adresse_courriel TEXT,
+    etablissements_surveilles TEXT,
+    mot_de_passe TEXT
+);

@@ -1,6 +1,4 @@
 import sqlite3
-from flask import current_app, g
-
 class Database:
     def __init__(self):
         self.connection = None

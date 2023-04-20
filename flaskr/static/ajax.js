@@ -109,14 +109,32 @@ function clearViolations(){
 }
 
 function displayViolations(contraventions) {
+  var thead = document.querySelector("#table-violations thead");
+  thead.innerHTML = "<tr><th>Date</th><th>Description</th><th>Adresse</th><th>Date jugement</th><th>Etablissement</th><th>Montant</th><th>Proprietaire</th><th>Ville</th><th>Statut</th><th>Date statut</th><th>Categorie</th></tr>";
   var tbody = document.querySelector("#table-violations tbody");
   for (var i = 0; i < contraventions.length; i++) {
     var row = tbody.insertRow();
     var dateCell = row.insertCell();
     var descrCell = row.insertCell();
+    var adresseCell = row.insertCell();
+    var dateJugementCell = row.insertCell();
+    var etablissementCell = row.insertCell();
     var montantCell = row.insertCell();
+    var proprietaireCell = row.insertCell();
+    var villeCell = row.insertCell();
+    var statutCell = row.insertCell();
+    var dateStatutCell = row.insertCell();
+    var categorie = row.insertCell();
     dateCell.textContent = contraventions[i].date;
     descrCell.textContent = contraventions[i].description;
+    adresseCell.textContent = contraventions[i].adresse;
+    dateJugementCell.textContent = contraventions[i].date_jugement;
+    etablissementCell.textContent = contraventions[i].etablissement;
     montantCell.textContent = contraventions[i].montant;
+    proprietaireCell.textContent = contraventions[i].proprietaire;
+    villeCell.textContent = contraventions[i].ville;
+    statutCell.textContent = contraventions[i].statut;
+    dateStatutCell.textContent = contraventions[i].date_statut;
+    categorie.textContent = contraventions[i].categorie;
   }
 }
