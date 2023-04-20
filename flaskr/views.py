@@ -101,11 +101,13 @@ def create_user():
     user = User(None, data["nom_complet"], data["adresse_courriel"], data["etablissements_surveilles"], data["mot_de_passe"])
     user = get_db_user().saveUser(user)
     if user.id is None:
-        response = jsonify({"message": "Failed to create user"})
+        response = jsonify({"message": "Échec de la création de l'utilisateur"})
         response.status_code = 500
         return response
     return jsonify(user.asDictionary()), 201
 
 @views.route('/doc')
 def documentation():
-    return render_template('doc.html')
+    with open('flaskr/templates/doc.html', 'r', encoding="utf-16") as f:
+        html = f.read()
+    return render_template(html)

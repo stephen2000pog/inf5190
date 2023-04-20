@@ -1,7 +1,7 @@
 ## Installer les dépendances
 pip install -r requirements.txt
 
-raml2html flaskr/static/doc.raml > flaskr/templates/doc.html
+raml2html --input-encoding utf-8 flaskr/static/doc.raml > flaskr/templates/doc.html
 ## Initialiser la base de donnée(déjà initialisé par défaut)
 python .\flaskr\init_db.py 
 
