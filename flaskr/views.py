@@ -37,6 +37,10 @@ def validation_error(e):
 def home():
     return render_template("home.html")
 
+@views.route('/search')
+def search():
+    return render_template("search.html")
+
 @views.route('/search-result')
 def search_result():
     query = request.args.get('query')
