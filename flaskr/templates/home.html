@@ -1,21 +1,40 @@
 {% extends "base.html" %}
 {% block title %}Accueil{% endblock %}
 {% block content%}
-<div>
-    <h1>Dernières publications en date</h1>
-    <br>
-        {% for article in articles%}
-        <p>Titre : {{ article["titre"] }}</p>
-        <p>Auteur : {{ article["auteur"] }}</p>
-        <p>Date de publication : {{ article["date_publication"] }}</p>
-        <p>Description : {{ article["paragraphe"] }}</p>
-        <hr>
-      {% endfor %}  
-</div>
-<form action="/search" method="GET">
-  <label for="search">Rechercher par auteur ou titre :</label>
-  <input type="text" id="search" name="query">
-  <button type="submit" class="btn btn-primary">Rechercher</button>
+<form action="/search-result" method="GET">
+    <p>Rechercher les contravenants par nom d'établissement, propriétaire, rue:</p>
+    <label for="search-result"></label>
+    <input type="text" id="search-result" name="query">
+    <button type="submit" class="btn btn-primary">Rechercher</button>
 </form>
-
+<br>
+<form>
+    <p>Rechercher les contravenants entre 2 dates:</p>
+    <label for="date-debut">Du :</label>
+    <input type="date" id="date-debut" name="du">
+    <label for="date-fin">Au :</label>
+    <input type="date" id="date-fin" name="au">
+    <button type="button" class="btn btn-primary" onclick="searchContraventions()">Rechercher</button>
+</form>
+<br>
+<form>
+  <p>Rechercher les infractions par nom:</p>
+  <select id="restaurant-select">
+  </select>
+  <button type="button" class="btn btn-primary" onclick="searchInfractionByEtablissement()">Rechercher</button>
+</form>
+<table id="table-contraventions" class="table">
+    <thead>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<table id="table-violations" class="table">
+  <thead>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+<script type="text/javascript" src="static\ajax.js">
+</script>
 {% endblock %}

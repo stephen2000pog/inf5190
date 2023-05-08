@@ -1,0 +1,162 @@
+#%RAML 1.0
+title: API pour les contraventions
+baseUri: http://localhost:5000
+mediaType: application/json
+
+/contravenents:
+  displayName: Contravention
+  get:
+    description: Récupérer la liste des contraventions
+    queryParameters:
+      du:
+        type: string
+        description: Date de début au format ISO 8601 (YYYY-MM-DD)
+        example: 2022-05-14
+        required: true
+      au:
+        type: string
+        description: Date de fin au format ISO 8601 (YYYY-MM-DD)
+        example: 2022-05-20
+        required: true
+    responses:
+      200:
+        body:
+          application/json:
+            type: Contraventions[]
+            example: 
+              [
+                {
+                  "adresse": "7600 Boul. Viau, St-Léonard, Québec",
+                  "business_id": "110116",
+                  "categorie": "Magasin à rayons",
+                  "date": 20220517,
+                  "date_jugement": 20221110,
+                  "date_statut": 20150420,
+                  "description": "Le lieu ou le véhicule doit être exempt de contaminants, de polluants, de toute espèce d'animaux y compris les insectes et les rongeurs ou de leurs excréments.",
+                  "etablissement": "DOLLARAMA",
+                  "id_poursuite": 8662,
+                  "montant": 1600,
+                  "nombre_infractions": 1,
+                  "proprietaire": "DOLLARAMA S.E.C.",
+                  "statut": "Ouvert",
+                  "ville": "St-Léonard"
+                }
+              ]
+      404:
+        body:
+          application/json:
+            example:
+              "message": "Aucune contravention trouvée pour les dates spécifiées"
+
+/etablissements/{format}:
+  displayName: Etablissement
+  get:
+    description: Retourne la liste des établissements triés par nombre d'infractions, dans le format spécifié (JSON ou XML)
+    uriParameters:
+      format:
+        description: Le format dans lequel la liste d'établissements doit être renvoyée
+        type: string
+        enum: [json, xml]
+        required: true
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              [
+                {
+                  "id": 1,
+                  "nom": "École primaire Sainte-Marie",
+                  "adresse": "123 rue Principale",
+                  "ville": "Montréal",
+                  "code_postal": "H1A 2B3",
+                  "nombre_infractions": 12
+                },
+                {
+                  "id": 2,
+                  "nom": "Collège Beaubois",
+                  "adresse": "456 boulevard Saint-Michel",
+                  "ville": "Laval",
+                  "code_postal": "H2C 1E2",
+                  "nombre_infractions": 8
+                }
+              ]
+          application/xml:
+            example: |
+              <?xml version="1.0" ?>
+              <etablissements>
+                <etablissement>
+                  <id>1</id>
+                  <nom>École primaire Sainte-Marie</nom>
+                  <adresse>123 rue Principale</adresse>
+                  <ville>Montréal</ville>
+                  <code_postal>H1A 2B3</code_postal>
+                  <nombre_infractions>12</nombre_infractions>
+                </etablissement>
+                <etablissement>
+                  <id>2</id>
+                  <nom>Collège Beaubois</nom>
+                  <adresse>456 boulevard Saint-Michel</adresse>
+                  <ville>Laval</ville>
+                  <code_postal>H2C 1E2</code_postal>
+                  <nombre_infractions>8</nombre_infractions>
+                </etablissement>
+              </etablissements>
+      400:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Format non supporté"
+              }
+      404:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Aucun établissement trouvé"
+              }
+                    
+/users:
+  displayName: User
+  post:
+    description: Créer un nouvel utilisateur
+    body:
+      application/json:
+        type: object
+        properties:
+          nom_complet:
+            type: string
+          adresse_courriel:
+            type: string
+          etablissements_surveilles:
+            type: array
+            items:
+              type: string
+          mot_de_passe:
+            type: string
+    responses:
+      201:
+        body:
+          application/json:
+            example: |
+              {
+                "nom_complet": "John Doe",
+                "adresse_courriel": "johndoe@gmail.com",
+                "etablissements_surveilles": ["Ecole primaire Sainte-Marie", "Collège Beaubois"],
+                "mot_de_passe": "1213"
+              }
+      400:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Invalid request data"
+              }
+      500:
+        body:
+          application/json:
+            example: |
+              {
+                "message": "Échec de la création de l'utilisateur"
+              }

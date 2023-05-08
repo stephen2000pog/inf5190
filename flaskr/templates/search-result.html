@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Resulat de recherche{% endblock %}
+{% block content%}
+<div>
+    <h1>Résultats pour la recherche "{{ query }}"</h1>
+      {% for contravenant in contravenants %}
+        <p>Date : {{ contravenant["date"] }}</p>
+        <p>Description : {{ contravenant["description"] }}</p>
+        <p>Adresse : {{ contravenant["adresse"] }}</p>
+        <p>Date jugement : {{ contravenant["date_jugement"] }}</p>
+        <p>Etablissement : {{ contravenant["etablissement"] }}</p>
+        <p>Montant : {{ contravenant["montant"] }}</p>
+        <p>Proprietaire : {{ contravenant["proprietaire"] }}</p>
+        <p>Ville : {{ contravenant["ville"] }}</p>
+        <p>Statut : {{ contravenant["statut"] }}</p>
+        <p>Date statut : {{ contravenant["date_statut"] }}</p>
+        <p>Categorie : {{ contravenant["categorie"] }}</p>
+        <hr>
+      {% endfor %}
+</div>
+{% endblock %}
