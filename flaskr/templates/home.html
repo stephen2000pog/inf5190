@@ -1,40 +1,30 @@
 {% extends "base.html" %}
 {% block title %}Accueil{% endblock %}
 {% block content%}
-<form action="/search-result" method="GET">
-    <p>Rechercher les contravenants par nom d'établissement, propriétaire, rue:</p>
-    <label for="search-result"></label>
-    <input type="text" id="search-result" name="query">
-    <button type="submit" class="btn btn-primary">Rechercher</button>
-</form>
-<br>
-<form>
-    <p>Rechercher les contravenants entre 2 dates:</p>
-    <label for="date-debut">Du :</label>
-    <input type="date" id="date-debut" name="du">
-    <label for="date-fin">Au :</label>
-    <input type="date" id="date-fin" name="au">
-    <button type="button" class="btn btn-primary" onclick="searchContraventions()">Rechercher</button>
-</form>
-<br>
-<form>
-  <p>Rechercher les infractions par nom:</p>
-  <select id="restaurant-select">
-  </select>
-  <button type="button" class="btn btn-primary" onclick="searchInfractionByEtablissement()">Rechercher</button>
-</form>
-<table id="table-contraventions" class="table">
-    <thead>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-<table id="table-violations" class="table">
-  <thead>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
-<script type="text/javascript" src="static\ajax.js">
-</script>
+  <header>
+      <h1>Projet de session: Programmation Web Avancé</h1>
+    </header>
+    <main>
+      <section>
+        <p>Ce projet réalisé avec Flask consiste à récupérer un ensemble de données provenant de la ville de Montréal et d'offrir des services à partir de ces données. Il s'agit de données ouvertes à propos d'établissements ayant reçu des constats d'infraction lors d'inspections alimentaires.</p>
+      </section>
+      <section>
+        <h2>Fonctionnalités</h2>
+        <p>Un BackgroundScheduler met à jour la base de données tous les soirs à minuit.</p>
+        <p>Les fonctionnalités implémentées dans la page Rechercher sont :</p>
+        <ul>
+          <li>La première page de recherche permet de rechercher les contraventions par: nom d'établissement, propriétaire, rue. </li>
+          <li>La deuxième page de recherche permet de rechercher les contravenants entre deux dates.</li>
+          <li>La troisième page de recherche permet de rechercher les infractions par nom.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Documentation</h2>
+        <p>La documentation de l'API se trouve à l'adresse <a href="https://stephen2000pog.pythonanywhere.com/doc">https://stephen2000pog.pythonanywhere.com/doc</a></p>
+      </section>
+      <section>
+        <h2>Code source</h2>
+        <p>Cliquer ici. <a href="https://github.com/stephen2000pog/inf5190">https://github.com/stephen2000pog/inf5190</a></p>
+      </section>
+    </main>
 {% endblock %}
