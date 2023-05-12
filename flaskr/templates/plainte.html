@@ -3,7 +3,7 @@
 {% block content%}
   <div class="container">
     <h1>Formuler une plainte</h1>
-    <form id="complaint-form">
+    <form action="/traitement-plainte" id="plainte-form" method="POST">
       <div class="mb-3">
         <label for="establishment-name" class="form-label">Nom du restaurant:</label>
         <input type="text" id="establishment-name" name="establishmentName" class="form-control" required>

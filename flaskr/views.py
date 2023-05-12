@@ -1,4 +1,5 @@
-from flask import Flask, Blueprint, render_template, g, request, jsonify, make_response
+from flask import Flask, Blueprint, redirect, render_template, g, request, jsonify, make_response, url_for
+from flask_login import login_required
 from .violations import Violation
 from dicttoxml import dicttoxml
 from xml.dom.minidom import parseString
@@ -36,6 +37,21 @@ def validation_error(e):
 @views.route('/')
 def home():
     return render_template("home.html")
+
+@views.route('/inscription')
+def inscription():
+    return render_template("inscription.html")
+
+@views.route('/connexion')
+def connexion():
+    return render_template("connexion.html")
+
+@views.route('/profil')
+@login_required  # Decorator to require authentication for accessing the route
+def profil():
+    
+
+    return render_template('profil.html', plaintes=plaintes)
 
 @views.route('/plainte')
 def plainte():
@@ -113,6 +129,24 @@ def create_user():
         response.status_code = 500
         return response
     return jsonify(user.asDictionary()), 201
+
+@views.route('/traitement-plainte', methods=['POST'])
+def traitement_plainte():
+    # Traitement de la soumission du formulaire de plainte
+    establishment_name = request.form['establishmentName']
+    address = request.form['address']
+    city = request.form['city']
+    visit_date = request.form['visitDate']
+    client_name = request.form['clientName']
+    description = request.form['description']
+
+    # Effectuer les actions nécessaires avec les données de la plainte
+
+    return redirect(url_for('views.confirmation_plainte'))
+
+@views.route('/confirmation-plainte')
+def confirmation_plainte():
+    return render_template('confirmation-plainte.html')
 
 @views.route('/doc')
 def documentation():
