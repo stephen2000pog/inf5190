@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Plainte{% endblock %}
+{% block content%}
+  <div class="container">
+    <h1>Formuler une plainte</h1>
+    <form id="complaint-form">
+      <div class="mb-3">
+        <label for="establishment-name" class="form-label">Nom du restaurant:</label>
+        <input type="text" id="establishment-name" name="establishmentName" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="address" class="form-label">Addresse:</label>
+        <input type="text" id="address" name="address" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="city" class="form-label">Ville:</label>
+        <input type="text" id="city" name="city" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="visit-date" class="form-label">Date de visite:</label>
+        <input type="date" id="visit-date" name="visitDate" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="client-name" class="form-label">Votre nom et prénom:</label>
+        <input type="text" id="client-name" name="clientName" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description du problème:</label>
+        <textarea id="description" name="description" class="form-control" required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Soumettre</button>
+    </form>
+  </div>
+  
+{% endblock %}

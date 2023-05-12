@@ -1,20 +1,21 @@
 {% extends "base.html" %}
 {% block title %}Resulat de recherche{% endblock %}
 {% block content%}
-<div>
+<div class="container">
     <h1>Résultats pour la recherche "{{ query }}"</h1>
+    <br>
       {% for contravenant in contravenants %}
-        <p>Date : {{ contravenant["date"] }}</p>
-        <p>Description : {{ contravenant["description"] }}</p>
-        <p>Adresse : {{ contravenant["adresse"] }}</p>
-        <p>Date jugement : {{ contravenant["date_jugement"] }}</p>
-        <p>Etablissement : {{ contravenant["etablissement"] }}</p>
-        <p>Montant : {{ contravenant["montant"] }}</p>
-        <p>Proprietaire : {{ contravenant["proprietaire"] }}</p>
-        <p>Ville : {{ contravenant["ville"] }}</p>
-        <p>Statut : {{ contravenant["statut"] }}</p>
-        <p>Date statut : {{ contravenant["date_statut"] }}</p>
-        <p>Categorie : {{ contravenant["categorie"] }}</p>
+        <p><strong>Date :</strong> {{ contravenant["date"] }}</p>
+        <p><strong>Description :</strong> {{ contravenant["description"] }}</p>
+        <p><strong>Adresse :</strong> {{ contravenant["adresse"] }}</p>
+        <p><strong>Date jugement :</strong> {{ contravenant["date_jugement"] }}</p>
+        <p><strong>Etablissement :</strong> {{ contravenant["etablissement"] }}</p>
+        <p><strong>Montant :</strong> {{ contravenant["montant"] }}</p>
+        <p><strong>Proprietaire :</strong> {{ contravenant["proprietaire"] }}</p>
+        <p><strong>Ville :</strong> {{ contravenant["ville"] }}</p>
+        <p><strong>Statut :</strong> {{ contravenant["statut"] }}</p>
+        <p><strong>Date statut :</strong> {{ contravenant["date_statut"] }}</p>
+        <p><strong>Categorie :</strong> {{ contravenant["categorie"] }}</p>
         <hr>
       {% endfor %}
 </div>

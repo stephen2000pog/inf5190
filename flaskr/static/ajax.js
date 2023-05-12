@@ -62,25 +62,34 @@ function populateTable(contraventions){
   var thead = document.querySelector("#table-contraventions thead");
   thead.innerHTML = "<tr><th>Nom de l'établissement</th><th>Nombre de contraventions</th></tr>";
   var tbody = document.querySelector("#table-contraventions tbody");
-  var resultats = {};
-  for (var i = 0; i < contraventions.length; i++) {
-    var etablissement = contraventions[i].etablissement;
-    if (etablissement in resultats) {
-      resultats[etablissement]++;
-    } else {  
-      resultats[etablissement] = 1;
+  
+  if (contraventions.length === 0) {
+    var messageRow = tbody.insertRow();
+    var messageCell = messageRow.insertCell();
+    messageCell.colSpan = 2;
+    messageCell.textContent = "Aucune contravention trouvée pour ces dates.";
+  } else {
+    var resultats = {};
+    for (var i = 0; i < contraventions.length; i++) {
+      var etablissement = contraventions[i].etablissement;
+      if (etablissement in resultats) {
+        resultats[etablissement]++;
+      } else {  
+        resultats[etablissement] = 1;
+      }
+    }
+
+    for (var etablissement in resultats) {
+      var count = resultats[etablissement];
+      var row = tbody.insertRow();
+      var nomCell = row.insertCell();
+      var nombreCell = row.insertCell();
+      nomCell.textContent = etablissement;
+      nombreCell.textContent = count;
     }
   }
-
-  for (var etablissement in resultats) {
-    var count = resultats[etablissement];
-    var row = tbody.insertRow();
-    var nomCell = row.insertCell();
-    var nombreCell = row.insertCell();
-    nomCell.textContent = etablissement;
-    nombreCell.textContent = count;
-  }
 }
+
 
 function searchInfractionByEtablissement(){
   var etablissement = document.getElementById("restaurant-select").value;

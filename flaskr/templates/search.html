@@ -1,40 +1,51 @@
 {% extends "base.html" %}
 {% block title %}Rechercher{% endblock %}
 {% block content%}
-<form action="/search-result" method="GET">
+<div class="container">
+  <h1>Recherche de Contraventions</h1>
+
+  <form action="/search-result" method="GET" class="mb-3">
     <p>Rechercher les contravenants par nom d'établissement, propriétaire, rue:</p>
-    <label for="search-result"></label>
-    <input type="text" id="search-result" name="query">
-    <button type="submit" class="btn btn-primary">Rechercher</button>
-</form>
-<br>
-<form>
+    <div class="input-group">
+      <input type="text" id="search-result" name="query" class="form-control">
+      <button type="submit" class="btn btn-primary">Rechercher</button>
+    </div>
+  </form>
+
+  <form class="mb-3">
     <p>Rechercher les contravenants entre deux dates:</p>
-    <label for="date-debut">Du :</label>
-    <input type="date" id="date-debut" name="du">
-    <label for="date-fin">Au :</label>
-    <input type="date" id="date-fin" name="au">
-    <button type="button" class="btn btn-primary" onclick="searchContraventions()">Rechercher</button>
-</form>
-<br>
-<form>
-  <p>Rechercher les infractions par nom:</p>
-  <select id="restaurant-select">
-  </select>
-  <button type="button" class="btn btn-primary" onclick="searchInfractionByEtablissement()">Rechercher</button>
-</form>
-<table id="table-contraventions" class="table">
+    <div class="input-group">
+      <label for="date-debut" class="input-group-text">Du :</label>
+      <input type="date" id="date-debut" name="du" class="form-control">
+      <label for="date-fin" class="input-group-text">Au :</label>
+      <input type="date" id="date-fin" name="au" class="form-control">
+      <button type="button" class="btn btn-primary" onclick="searchContraventions()">Rechercher</button>
+    </div>
+  </form>
+
+  <form class="mb-3">
+    <p>Rechercher les infractions par nom:</p>
+    <div class="input-group">
+      <select id="restaurant-select" class="form-select">
+      </select>
+      <button type="button" class="btn btn-primary" onclick="searchInfractionByEtablissement()">Rechercher</button>
+    </div>
+  </form>
+
+  <table id="table-contraventions" class="table">
     <thead>
     </thead>
     <tbody>
     </tbody>
-</table>
-<table id="table-violations" class="table">
-  <thead>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
+  </table>
+
+  <table id="table-violations" class="table">
+    <thead>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
 <script type="text/javascript" src="static\ajax.js">
 </script>
 {% endblock %}
