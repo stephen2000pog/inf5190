@@ -1,5 +1,27 @@
 {% extends "base.html" %}
-{% block title %}Confirmation de plainte{% endblock %}
+{% block title %}Inscription{% endblock %}
 {% block content%}
-c
+<div class="container">
+    <h1 class="mt-4">Inscription</h1>
+    <form id="registration-form" class="mt-4">
+      <div class="mb-3">
+        <label for="full-name" class="form-label">Nom complet:</label>
+        <input type="text" id="full-name" name="nom_complet" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Adresse courriel:</label>
+        <input type="email" id="email" name="adresse_courriel" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe:</label>
+        <input type="password" id="password" name="mot_de_passe" class="form-control" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary" onclick="validateInscriptionForm()()">S'inscrire</button>
+    </form>
+</div>
+<script type="text/javascript" src="static\form.js">
+</script>
 {% endblock %}

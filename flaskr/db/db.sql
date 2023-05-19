@@ -17,13 +17,14 @@ CREATE TABLE users (
     id INTEGER,
     nom_complet TEXT,
     adresse_courriel TEXT,
-    etablissements_surveilles TEXT,
     mot_de_passe TEXT
 );
 CREATE TABLE plainte (
     id INTEGER,
-    nom_complet TEXT,
-    adresse_courriel TEXT,
-    etablissements_surveilles TEXT,
-    mot_de_passe TEXT
+    etablissement TEXT,
+    adresse TEXT,
+    ville TEXT,
+    date_visite TEXT,
+    nom_client TEXT,
+    description TEXT,
 );
