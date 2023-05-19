@@ -1,5 +1,7 @@
-from flask import Flask, Blueprint, render_template, g, request, jsonify, make_response
+from flask import Flask, Blueprint, flash, redirect, render_template, g, request, jsonify, make_response, session, url_for
+from flask_login import login_required
 from .violations import Violation
+from .plainte import Plainte
 from dicttoxml import dicttoxml
 from xml.dom.minidom import parseString
 from flask_json_schema import JsonSchema, JsonValidationError
@@ -22,6 +24,12 @@ def get_db_user():
         g._database = User(None, None, None, None, None)
     return g._database
 
+def get_db_plainte():
+    db = getattr(g, '_database', None)
+    if db is None:
+        g._database = Plainte()
+    return g._database
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
@@ -36,6 +44,25 @@ def validation_error(e):
 @views.route('/')
 def home():
     return render_template("home.html")
+
+@views.route('/inscription')
+def inscription():
+    return render_template("inscription.html")
+
+@views.route('/connexion')
+def connexion():
+    return render_template("connexion.html")
+
+@views.route('/profil')
+@login_required  # Decorator to require authentication for accessing the route
+def profil():
+    
+
+    return render_template('profil.html', plaintes=plaintes)
+
+@views.route('/plainte')
+def plainte():
+    return render_template("plainte.html")
 
 @views.route('/search')
 def search():
@@ -98,17 +125,56 @@ def get_etablissements_ordered_by_most_infractions(format):
         response.status_code = 400
         return response
 
-@views.route('/users', methods=['POST'])
+@views.route('/inscription', methods=['POST'])
 @schema.validate(create_user_schema)
 def create_user():
     data = request.get_json()
-    user = User(None, data["nom_complet"], data["adresse_courriel"], data["etablissements_surveilles"], data["mot_de_passe"])
+    user = User(None, data["nom_complet"], data["adresse_courriel"], data["mot_de_passe"])
     user = get_db_user().saveUser(user)
     if user.id is None:
         response = jsonify({"message": "Échec de la création de l'utilisateur"})
         response.status_code = 500
         return response
     return jsonify(user.asDictionary()), 201
+
+@views.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        # Recherche de l'utilisateur dans la base de données
+        user = get_db_user().searchUser(username, password)
+        if user:
+            # Authentification réussie
+            session['user_id'] = user.id
+            return redirect('/profil')
+        else:
+            # Authentification échouée
+            return 'Invalid username or password'
+
+    return render_template('login.html')
+
+@views.route('/traitement-plainte', methods=['POST'])
+def traitement_plainte():
+    # Traitement de la soumission du formulaire de plainte
+    etablissement = request.form['establishmentName']
+    addresse = request.form['address']
+    ville = request.form['city']
+    date_visite = request.form['visitDate']
+    nom_client = request.form['clientName']
+    description = request.form['description']
+
+    # Effectuer les actions nécessaires avec les données de la plainte
+    if get_db_plainte().savePlainte(etablissement, addresse, ville, date_visite, nom_client, description):
+        return redirect(url_for('views.confirmation_plainte'))
+    else:
+        flash("Erreur lors de l'enregistrement de la plainte.", 'error')
+        return redirect(url_for('views.plainte'))
+
+@views.route('/confirmation-plainte')
+def confirmation_plainte():
+    return render_template('confirmation-plainte.html')
 
 @views.route('/doc')
 def documentation():

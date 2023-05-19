@@ -8,20 +8,24 @@ class Violation(Database):
         connection = self.get_connection_row()
         cursor = connection.cursor()
         query = query.split()
-        sql_query = "SELECT * FROM violations WHERE "
         params = []
 
-        for i, mot in enumerate(query):
-            if i > 0:
-                sql_query += " OR "
-            sql_query += "etablissement LIKE ? OR proprietaire LIKE ? OR adresse LIKE ?"
-            pattern = f"%{mot}%"
-            params.extend([pattern, pattern, pattern])
+        if query:
+            sql_query = "SELECT * FROM violations WHERE "
+            for i, mot in enumerate(query):
+                if i > 0:
+                    sql_query += " OR "
+                sql_query += "etablissement LIKE ? OR proprietaire LIKE ? OR adresse LIKE ?"
+                pattern = f"%{mot}%"
+                params.extend([pattern, pattern, pattern])
             
-        cursor.execute(sql_query, params)
-        contravenants = cursor.fetchall()
+            cursor.execute(sql_query, params)
+            contravenants = cursor.fetchall()
+        else:
+            contravenants = []
+        
         return contravenants
-    
+ 
     def search_contraventions(self, du, au):
         connection = self.get_connection_row()
         cursor = connection.cursor()
